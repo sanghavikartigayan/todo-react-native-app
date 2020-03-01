@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, TextInput, Button, StyleSheet} from 'react-native';
+import { View, TextInput, Button, StyleSheet, Modal} from 'react-native';
 
 const TodoInput = props => {
     const [enteredTodo, setEnteredTodo] = useState('');
@@ -8,30 +8,63 @@ const TodoInput = props => {
         setEnteredTodo(enteredText);
       };
 
+    const addTodoHandler = () => {
+        props.onAddTodo(enteredTodo);
+        setEnteredTodo('');
+    }
+
+    const cancelAddTodo = () => {
+        props.onCancelAddTodo();
+        setEnteredTodo('');
+    }
+
     return (
-        <View style={styles.inputContainer}>
-            <TextInput 
-                style={styles.input}
-                placeholder="What do you want to do?"
-                onChangeText={todoInputHandler}
-                value={enteredTodo}
-            />
-            <Button title="Add" onPress={props.onAddTodo.bind(this, enteredTodo)} />
-      </View>
+        <Modal visible={props.visible} animationType="slide">
+            <View style={styles.inputContainer}>
+                <TextInput 
+                    style={styles.input}
+                    placeholder="What do you want to do?"
+                    onChangeText={todoInputHandler}
+                    value={enteredTodo}
+                />
+                <View style={styles.buttonContainer}>
+                    <View style={styles.button}>
+                        <Button 
+                            title="Cancel" 
+                            color="red" 
+                            onPress={cancelAddTodo} />
+                    </View>
+                   <View style={styles.button}>
+                        <Button 
+                            title="Add" 
+                            onPress={addTodoHandler} />
+                   </View>
+                </View>
+            </View>
+        </Modal>
     )
 }
 
 const styles = StyleSheet.create({
     inputContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignContent: 'center'
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
       },
       input: {
         width: '80%',
-        borderBottomColor: 'deepskyblue',
-        borderBottomWidth: 1,
-        padding: 10
+        borderColor: 'deepskyblue',
+        borderWidth: 1,
+        padding: 10,
+        marginBottom: 10
+      },
+      buttonContainer: {
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          width: '60%'
+      },
+      button: {
+          width: '40%'
       }
 })
 

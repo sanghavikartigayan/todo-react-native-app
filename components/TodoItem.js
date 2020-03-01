@@ -16,10 +16,12 @@ const TodoItem = props => {
 const styles = StyleSheet.create({
   listItem: {
     padding: 10,
-    backgroundColor: 'grey',
-    borderColor: 'black',
+    backgroundColor: 'rgb(240, 239, 237)',
+    borderColor: 'rgb(171, 167, 161)',
     borderWidth: 1,
-    marginVertical: 10
+    marginVertical: 10,
+    textAlign: 'center',
+    fontStyle: 'italic'
   }
 })
 

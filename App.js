@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, Button } from 'react-native';
 import TodoItem from './components/TodoItem';
 import TodoInput from './components/TodoInput';
 
 export default function App() {
   const [todoList, setTodoList] = useState([]);
+  const [isAddMode, setIsAddMode] = useState(false);
 
   const addTodoHandler = todoTitle => {
     setTodoList(currentTodo => [...currentTodo, { key: Math.random().toString(), value: todoTitle}]);
+    setIsAddMode(false);
   };
 
   const deleteTodoHandler = todoKey => {
@@ -16,9 +18,14 @@ export default function App() {
     })
   }
 
+  const cancelAddTodoHandler = () => {
+    setIsAddMode(false);
+  }
+
   return (
     <View style={styles.container}>
-      <TodoInput onAddTodo={addTodoHandler} />
+      <Button title="Add new Todo" onPress={() => setIsAddMode(true)} />
+      <TodoInput onAddTodo={addTodoHandler} visible={isAddMode} onCancelAddTodo={cancelAddTodoHandler} />
       <FlatList 
         data={todoList} 
         renderItem={itemData => ( 
