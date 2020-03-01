@@ -10,11 +10,22 @@ export default function App() {
     setTodoList(currentTodo => [...currentTodo, { key: Math.random().toString(), value: todoTitle}]);
   };
 
+  const deleteTodoHandler = todoKey => {
+    setTodoList(currentTodo => {
+      return currentTodo.filter(todo => todo.key !== todoKey)
+    })
+  }
+
   return (
     <View style={styles.container}>
       <TodoInput onAddTodo={addTodoHandler} />
-      <FlatList data={todoList} renderItem={itemData => ( 
-       <TodoItem title={itemData.item.value}/>
+      <FlatList 
+        data={todoList} 
+        renderItem={itemData => ( 
+          <TodoItem 
+              title={itemData.item.value} 
+              id={itemData.item.key} 
+              onDeleteTodo={deleteTodoHandler} />
         )} />
     </View>
   );
