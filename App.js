@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, FlatList, Button } from 'react-native';
+import { StyleSheet, View, FlatList, Button, Text } from 'react-native';
 import TodoItem from './components/TodoItem';
 import TodoInput from './components/TodoInput';
 
@@ -23,23 +23,41 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Button title="Add new Todo" onPress={() => setIsAddMode(true)} />
-      <TodoInput onAddTodo={addTodoHandler} visible={isAddMode} onCancelAddTodo={cancelAddTodoHandler} />
-      <FlatList 
-        data={todoList} 
-        renderItem={itemData => ( 
-          <TodoItem 
-              title={itemData.item.value} 
-              id={itemData.item.key} 
-              onDeleteTodo={deleteTodoHandler} />
-        )} />
-    </View>
+       <View style={styles.container}>
+         <Text style={styles.title}>TODO</Text>
+          <Button title="Add new Todo" onPress={() => setIsAddMode(true)} color="#f5568b"/>
+          <TodoInput onAddTodo={addTodoHandler} visible={isAddMode} onCancelAddTodo={cancelAddTodoHandler} />
+          <Text style={styles.subtitle}>Recent Todos</Text>
+          <FlatList 
+            data={todoList} 
+            renderItem={itemData => ( 
+              <TodoItem 
+                title={itemData.item.value} 
+                id={itemData.item.key} 
+                onDeleteTodo={deleteTodoHandler} />
+            )} />
+       </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 70
-  }
+    padding: 70,
+    backgroundColor: 'rgb(245, 130, 168)',
+    height: '100%'
+  },
+  title: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 40,
+    color: 'white',
+    marginBottom: 10
+  },
+  subtitle: {
+    fontSize: 20,
+    color: 'white',
+    marginTop: 20,
+    paddingTop: 20,
+    textDecorationLine: 'underline'
+    }
 });
